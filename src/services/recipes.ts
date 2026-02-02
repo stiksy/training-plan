@@ -1,5 +1,5 @@
 import { supabase } from './supabase'
-import type { Recipe, RecipeWithIngredients, MealType, RecipeIngredient } from '@/types'
+import type { Recipe, RecipeWithIngredients, MealType } from '@/types'
 
 /**
  * Fetch all recipes, optionally filtered by meal type

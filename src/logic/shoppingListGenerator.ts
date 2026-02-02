@@ -1,5 +1,5 @@
 import { supabase } from '@/services/supabase'
-import type { MealPlanSlot, ShoppingListItem, RecipeIngredient, Ingredient } from '@/types'
+import type { Ingredient } from '@/types'
 import { aggregateIngredients, roundToShoppingQuantity, formatQuantity, isPantryStaple } from './unitConversion'
 
 /**

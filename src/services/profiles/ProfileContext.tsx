@@ -59,31 +59,41 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
 
       setHousehold(householdData)
 
-      // Get all household members
-      const { data: membersData, error: membersError } = await supabase
+      // Get all household member user IDs
+      const { data: membershipRecords, error: membersError } = await supabase
         .from('household_members')
-        .select(`
-          user:users(*)
-        `)
+        .select('user_id')
         .eq('household_id', membershipData.household_id)
 
-      if (membersError) {
+      if (membersError || !membershipRecords) {
         console.error('Error fetching household members:', membersError)
         setLoading(false)
         return
       }
 
-      const members = membersData.map(m => m.user).filter(Boolean) as User[]
-      setHouseholdMembers(members)
+      // Get user details for all members
+      const userIds = membershipRecords.map(m => m.user_id)
+      const { data: usersData, error: usersError } = await supabase
+        .from('users')
+        .select('*')
+        .in('id', userIds)
+
+      if (usersError || !usersData) {
+        console.error('Error fetching users:', usersError)
+        setLoading(false)
+        return
+      }
+
+      setHouseholdMembers(usersData)
 
       // Set active profile to current auth user if not already set
-      if (!activeProfile && members.length > 0) {
-        const currentUser = members.find(m => m.id === authUser.id)
+      if (!activeProfile && usersData.length > 0) {
+        const currentUser = usersData.find(m => m.id === authUser.id)
         if (currentUser) {
           setActiveProfile(currentUser)
         } else {
           // Default to first member if auth user not found
-          setActiveProfile(members[0])
+          setActiveProfile(usersData[0])
         }
       }
     } catch (error) {
