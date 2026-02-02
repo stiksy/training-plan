@@ -4,6 +4,7 @@ import { MockAuthProvider as AuthProvider } from './services/auth/MockAuth'
 import { ProfileProvider, useProfile } from './services/profiles/ProfileContext'
 import { ProfileSwitcher } from './components/ProfileSwitcher'
 import { MealPlanner } from './components/MealPlanner'
+import { ShoppingList } from './components/ShoppingList'
 import './App.css'
 
 function AppContent() {
@@ -73,12 +74,7 @@ function AppContent() {
             </div>
           } />
           <Route path="/meals" element={<MealPlanner />} />
-          <Route path="/shopping" element={
-            <div className="page-placeholder">
-              <h2>Shopping List</h2>
-              <p>Coming soon...</p>
-            </div>
-          } />
+          <Route path="/shopping" element={<ShoppingList />} />
           <Route path="/workouts" element={
             <div className="page-placeholder">
               <h2>Workouts</h2>

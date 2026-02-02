@@ -1,0 +1,188 @@
+.shopping-list {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.shopping-list-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.shopping-list-header h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.week-label {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.shopping-list-actions {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.copy-btn {
+  padding: 1rem 2rem;
+  background: #646cff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 200px;
+}
+
+.copy-btn:hover {
+  background: #535bf2;
+}
+
+.copy-btn.copied {
+  background: #4caf50;
+}
+
+.shopping-list-content {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.shopping-category {
+  margin-bottom: 2rem;
+}
+
+.shopping-category:last-child {
+  margin-bottom: 0;
+}
+
+.category-title {
+  font-size: 1.3rem;
+  color: #646cff;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e0e0e0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.category-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.shopping-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background: #f8f9ff;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.shopping-item:hover {
+  background: #f0f2ff;
+}
+
+.item-quantity {
+  font-weight: 600;
+  color: #646cff;
+  min-width: 60px;
+  font-size: 0.95rem;
+}
+
+.item-name {
+  flex: 1;
+  color: #333;
+  font-size: 1rem;
+}
+
+.pantry-note {
+  color: #ff9800;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+.shopping-list-footer {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.footer-note {
+  color: #666;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.shopping-list-loading,
+.shopping-list-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  padding: 2rem;
+}
+
+.shopping-list-empty h2 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.shopping-list-empty p {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.btn-primary {
+  padding: 1rem 2rem;
+  background: #646cff;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background 0.2s;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  background: #535bf2;
+}
+
+@media (max-width: 768px) {
+  .shopping-list {
+    padding: 1rem;
+  }
+
+  .shopping-list-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .shopping-list-content {
+    padding: 1rem;
+  }
+
+  .category-title {
+    font-size: 1.1rem;
+  }
+
+  .shopping-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .item-quantity {
+    min-width: auto;
+  }
+}

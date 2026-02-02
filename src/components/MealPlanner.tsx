@@ -15,6 +15,7 @@ export function MealPlanner() {
   const [slots, setSlots] = useState<MealPlanSlot[]>([])
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
   const [selectedSlot, setSelectedSlot] = useState<{ day: number; mealType: MealType } | null>(null)
 
   // Load meal plan for current week
@@ -75,6 +76,35 @@ export function MealPlanner() {
     setSelectedSlot({ day, mealType })
   }
 
+  const handleRecipeSelect = async (recipeId: string) => {
+    if (!selectedSlot || !mealPlan || saving) return
+
+    setSaving(true)
+    try {
+      const { updateMealPlanSlot } = await import('@/services/mealPlans')
+      await updateMealPlanSlot(
+        mealPlan.id,
+        selectedSlot.day,
+        selectedSlot.mealType,
+        recipeId
+      )
+
+      // Reload meal plan to show updated recipe
+      await loadMealPlan()
+      setSelectedSlot(null)
+    } catch (error) {
+      console.error('Error updating meal plan slot:', error)
+      alert('Failed to update meal. Please try again.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleGenerateShoppingList = () => {
+    // Navigate to shopping list page (will implement in next step)
+    window.location.href = '/training-plan/shopping'
+  }
+
   if (loading) {
     return (
       <div className="meal-planner-loading">
@@ -86,13 +116,20 @@ export function MealPlanner() {
   return (
     <div className="meal-planner">
       <div className="meal-planner-header">
-        <button onClick={() => navigateWeek('prev')} className="week-nav-btn">
-          ← Previous Week
-        </button>
-        <h1>Meal Plan: {formatWeekRange(weekStartDate)}</h1>
-        <button onClick={() => navigateWeek('next')} className="week-nav-btn">
-          Next Week →
-        </button>
+        <div className="header-nav">
+          <button onClick={() => navigateWeek('prev')} className="week-nav-btn">
+            ← Previous Week
+          </button>
+          <h1>Meal Plan: {formatWeekRange(weekStartDate)}</h1>
+          <button onClick={() => navigateWeek('next')} className="week-nav-btn">
+            Next Week →
+          </button>
+        </div>
+        {mealPlan && slots.length > 0 && (
+          <button onClick={handleGenerateShoppingList} className="generate-list-btn">
+            📋 Generate Shopping List
+          </button>
+        )}
       </div>
 
       {mealPlan?.status === 'draft' && (
@@ -152,17 +189,15 @@ export function MealPlanner() {
             <h2>Select {selectedSlot.mealType} for {getDayName(selectedSlot.day)}</h2>
             <p className="modal-subtitle">Choose from available recipes</p>
             <div className="recipe-options">
+              {saving && <div className="saving-indicator">Saving...</div>}
               {recipes
                 .filter(r => r.meal_type === selectedSlot.mealType)
                 .map(recipe => (
                   <button
                     key={recipe.id}
                     className="recipe-option"
-                    onClick={() => {
-                      // TODO: Update meal plan slot
-                      console.log('Selected recipe:', recipe.name)
-                      setSelectedSlot(null)
-                    }}
+                    onClick={() => handleRecipeSelect(recipe.id)}
+                    disabled={saving}
                   >
                     <div className="recipe-option-name">{recipe.name}</div>
                     <div className="recipe-option-meta">
