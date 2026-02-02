@@ -36,8 +36,7 @@ INSERT INTO ingredients (name, category, default_unit) VALUES
   ('Honey', 'pantry', 'tbsp'),
   ('Soy sauce', 'pantry', 'tbsp'),
   ('Lime juice', 'pantry', 'tbsp'),
-  ('Vinegar', 'pantry', 'tbsp')
-ON CONFLICT (name) DO NOTHING;
+  ('Vinegar', 'pantry', 'tbsp');
 
 -- Additional Breakfast Recipes (to reach 7+ total)
 INSERT INTO recipes (name, meal_type, cuisine_tags, servings, prep_time_min, cook_time_min, instructions) VALUES
