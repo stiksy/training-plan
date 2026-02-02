@@ -5,6 +5,7 @@ import { ProfileProvider, useProfile } from './services/profiles/ProfileContext'
 import { ProfileSwitcher } from './components/ProfileSwitcher'
 import { MealPlanner } from './components/MealPlanner'
 import { ShoppingList } from './components/ShoppingList'
+import { Dashboard } from './components/Dashboard'
 import './App.css'
 
 function AppContent() {
@@ -53,26 +54,7 @@ function AppContent() {
 
       <main className="app-main">
         <Routes>
-          <Route path="/" element={
-            <div className="dashboard-placeholder">
-              <h2>Welcome, {activeProfile.name}!</h2>
-              <p>Your dashboard will appear here.</p>
-              <div className="quick-links">
-                <Link to="/meals" className="quick-link-card">
-                  <h3>Meal Planner</h3>
-                  <p>Plan your weekly meals</p>
-                </Link>
-                <Link to="/shopping" className="quick-link-card">
-                  <h3>Shopping List</h3>
-                  <p>Generate your grocery list</p>
-                </Link>
-                <Link to="/workouts" className="quick-link-card">
-                  <h3>Workouts</h3>
-                  <p>View your exercise schedule</p>
-                </Link>
-              </div>
-            </div>
-          } />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/meals" element={<MealPlanner />} />
           <Route path="/shopping" element={<ShoppingList />} />
           <Route path="/workouts" element={

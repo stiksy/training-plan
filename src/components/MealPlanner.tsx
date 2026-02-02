@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useProfile } from '@/services/profiles/ProfileContext'
 import { getMealPlanForWeek, createMealPlan, getWeekStartDate, formatWeekRange, getDayName } from '@/services/mealPlans'
 import { getRecipes } from '@/services/recipes'
+import { subscribeToTable, unsubscribeFromChannel } from '@/services/realtime'
 import type { MealPlan, MealPlanSlot, Recipe, MealType } from '@/types'
 import './MealPlanner.css'
 
@@ -27,6 +28,29 @@ export function MealPlanner() {
   useEffect(() => {
     loadRecipes()
   }, [])
+
+  // Set up real-time sync for meal plan changes
+  useEffect(() => {
+    if (!mealPlan) return
+
+    console.log('🔔 Setting up real-time sync for meal plan:', mealPlan.id)
+
+    const channel = subscribeToTable('meal_plan_slots', (payload) => {
+      console.log('⚡ Real-time update received:', payload)
+
+      // Only reload if the change is for our current meal plan
+      if (payload.new?.meal_plan_id === mealPlan.id || payload.old?.meal_plan_id === mealPlan.id) {
+        console.log('🔄 Reloading meal plan due to real-time update')
+        loadMealPlan()
+      }
+    })
+
+    // Cleanup on unmount
+    return () => {
+      console.log('🔕 Cleaning up real-time subscription')
+      unsubscribeFromChannel(channel)
+    }
+  }, [mealPlan?.id])
 
   const loadMealPlan = async () => {
     if (!household) return
