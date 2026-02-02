@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import { AuthProvider } from './services/auth/AuthContext'
+// import { AuthProvider } from './services/auth/AuthContext'
+import { MockAuthProvider as AuthProvider } from './services/auth/MockAuth'
 import { ProfileProvider, useProfile } from './services/profiles/ProfileContext'
 import { ProfileSwitcher } from './components/ProfileSwitcher'
 import { MealPlanner } from './components/MealPlanner'
