@@ -70,61 +70,68 @@ This plan outlines the implementation of a web-based health tracking system for 
 
 **Essential for day-one use**
 
-1. **User profiles**
+1. **Profile switching (Netflix-style)**
+   - Landing page shows household member avatars/names
+   - Click to switch active profile (no password required within household)
+   - Active profile indicator throughout app
+   - Quick profile switcher in header/menu
+
+2. **User profiles**
    - Basic info: name, age, height, weight, goals
    - Health constraints (diastasis, knee issues, cycling goal)
    - Activity preferences
 
-2. **Weekly meal planner**
+3. **Weekly meal planner**
    - Grid view: 7 days × 3 meals (breakfast, lunch, dinner)
-   - Pre-populated with sensible defaults
+   - Shared across household (same meals for both users)
+   - Pre-populated with sensible defaults or carried forward from previous week
    - Click-to-swap interface with 3–5 alternatives per meal slot
    - Visual indicators for kid-friendly dinners
+   - "Plan next week" button to generate upcoming week
 
-3. **Shopping list generator**
+4. **Shopping list generator**
    - One-click generation from current week's meals
    - Grouped by category (produce, protein, pantry, etc.)
    - Quantities aggregated and deduplicated
    - Print and export (plain text, PDF)
 
-4. **Workout calendar**
-   - 7-day view with daily workout cards
+5. **Workout calendar**
+   - 7-day view with daily workout cards for active profile
+   - Toggle to view partner's schedule (for coordination)
    - Exercise name, duration, intensity
    - Contraindication badges (e.g. "Knee-safe", "Diastasis-modified")
    - YouTube links for gym exercises
    - Mark as complete/skip with optional note
+   - "Plan next week" button (carries forward current week, suggests alternatives for incomplete workouts)
 
-5. **Exercise library**
+6. **Exercise library**
    - Searchable list of all available exercises
    - Filterable by type, duration, difficulty, equipment
    - Safety notes and modifications
    - YouTube technique links
 
-6. **Basic dashboard**
-   - Current week overview
+7. **Basic dashboard**
+   - Current week overview (active profile)
+   - Quick view: partner's schedule alongside yours
    - Quick access to shopping list
    - Workout completion streak
    - Next workout preview
+   - Weekly planning status (meal plan ready? workout plan ready?)
 
 ### V1 (Post-MVP enhancements)
 
 **Valuable additions after MVP validation**
 
-7. **Progress tracking**
+8. **Progress tracking**
    - Weekly weight log (optional)
    - Workout completion history
    - Cycling-specific metrics (distance, avg speed, elevation)
    - Simple charts (completion rate, training volume)
 
-8. **Meal history and favourites**
+9. **Meal history and favourites**
    - Mark meals as favourites
    - View past meal plans
    - Quick-add favourites to future weeks
-
-9. **Workout adaptation logic**
-   - Suggest replacement if session is skipped
-   - Reduce intensity if pain is flagged
-   - Reschedule missed cycling rides
 
 10. **Shopping list enhancements**
     - Check-off items as purchased
@@ -136,16 +143,41 @@ This plan outlines the implementation of a web-based health tracking system for 
     - Copy previous week's meals
     - Template week creation
 
+12. **Advanced workout adaptation**
+    - Reduce intensity if pain is flagged repeatedly
+    - Suggest alternative exercise progressions
+    - Adaptive cycling plan adjustments for missed rides
+
 ### Nice-to-Haves (Future considerations)
 
-12. **Recipe detail pages** with cooking instructions and photos
-13. **Meal prep suggestions** (batch cooking, advance prep)
-14. **Exercise video filtering** (preferred YouTube channels)
-15. **Weather-aware cycling suggestions** (API integration)
-16. **Export full training plan** to cycling computer (GPX/FIT)
-17. **Shared notes** on meals and workouts
-18. **Calorie estimate ranges** (optional, conservative)
-19. **Dark mode** theme
+13. **Recipe detail pages** with cooking instructions and photos
+14. **Meal prep suggestions** (batch cooking, advance prep)
+15. **Exercise video filtering** (preferred YouTube channels)
+16. **Weather-aware cycling suggestions** (API integration)
+17. **Export full training plan** to cycling computer (GPX/FIT)
+18. **Shared notes** on meals and workouts
+19. **Calorie estimate ranges** (optional, conservative)
+20. **Dark mode** theme
+
+### User Experience Principles
+
+**Profile-based, not authentication-based**
+- Netflix-style profile switching: household members select their profile at start
+- No passwords required within household (auth protects household access only)
+- Active profile determines which workout schedule is shown by default
+- Clear visual indicator of active profile throughout app
+
+**Shared visibility for coordination**
+- All meal plans are shared (single household meal plan)
+- Workout schedules are individual but mutually visible
+- Toggle or tab to view partner's workout schedule
+- Side-by-side view option for planning coordination (e.g., "let's both go to gym Tuesday")
+
+**Weekly planning rhythm**
+- Both nutrition and training planned weekly (synchronized)
+- "Plan next week" available from Thursday onwards
+- Draft plans can be edited before activation
+- Plans become active on Monday (week start)
 
 ---
 
@@ -286,7 +318,9 @@ WorkoutSchedule {
   household_id: uuid (FK)
   user_id: uuid (FK)
   week_start_date: date
+  status: enum('draft', 'active', 'archived')
   created_at: timestamp
+  updated_at: timestamp
 }
 
 ScheduledWorkout {
@@ -298,6 +332,9 @@ ScheduledWorkout {
   status: enum('pending', 'completed', 'skipped')
   completion_note: text (nullable)
   completed_at: timestamp (nullable)
+  carried_forward_from: uuid (FK to ScheduledWorkout, nullable)
+  is_alternative: boolean (true if suggested as replacement for skipped workout)
+  alternative_reason: text (nullable, e.g., "Alternative for [skipped exercise]")
 }
 ```
 
@@ -408,6 +445,46 @@ CyclingLog {
 - Core stability (diastasis-safe): 2×/week
 - Upper body/general strength: 1×/week
 - Flexibility/yoga: 1×/week
+
+### Weekly Planning Workflow
+
+**Parallel to meal planning**: Workouts are planned weekly, synchronized with the meal planning cycle.
+
+**Planning cadence**
+- Sunday/Monday: Review current week's completion, plan next week
+- Both nutrition and training planned together for household coordination
+
+**Carry-forward logic (automatic)**
+1. System checks current week's workout completion status
+2. **Completed workouts**:
+   - Progress to next appropriate workout in progression
+   - Cycling: increase distance/intensity according to phase
+   - Strength: maintain or increase difficulty
+3. **Incomplete/skipped workouts**:
+   - Offer 2–3 alternative exercises in same category
+   - Maintain variety rules (no consecutive-day repeats)
+   - Flag as "suggested replacement" with reason: "Alternative for [skipped exercise]"
+4. **Pain-flagged workouts**:
+   - Automatically exclude exercises targeting affected body part for 3 days
+   - Suggest lower-impact alternatives
+   - Display recovery mode indicator
+
+**User workflow**
+1. Navigate to "Plan Next Week" (available from Thursday onward)
+2. System shows proposed schedule for both users side-by-side
+3. Users can:
+   - Accept proposed schedule
+   - Swap individual workout days
+   - Replace specific exercises from library
+   - View partner's schedule to coordinate (e.g., both gym days together)
+4. Finalize plan → becomes active on Monday
+
+**Profile-specific generation**
+- Each user's schedule generated independently based on:
+  - Personal health constraints (Wife: diastasis + knee filters)
+  - Individual goals (Me: cycling progression, Wife: strength + mobility)
+  - Previous week's completion status
+  - Progression phase (for cycling plan)
 
 ### Sample Two-Week Schedule
 
