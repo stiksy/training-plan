@@ -1337,9 +1337,9 @@ To maximise development velocity, split work across four specialised agents:
 
 ---
 
-### Constraint Challenges
+### Constraint Challenges ✅ ALL RESOLVED
 
-#### Challenge 1: GitHub Pages + Shared Data
+#### Challenge 1: GitHub Pages + Shared Data ✅
 
 **Quoted constraint**: "The frontend may be hosted on GitHub Pages" + "All clients must access and see the same shared data."
 
@@ -1359,7 +1359,7 @@ To maximise development velocity, split work across four specialised agents:
 
 ---
 
-#### Challenge 2: 30-Minute Daily Cap + Cycling Event Prep
+#### Challenge 2: 30-Minute Daily Cap + Cycling Event Prep ✅
 
 **Quoted constraint**: "Daily exercise suggestions (max 30 minutes/day)" + "Hampshire Hilly Hundred 68-mile ride on 17 May."
 
@@ -1371,15 +1371,15 @@ To maximise development velocity, split work across four specialised agents:
 3. **Reduce event goal**: Suggest 50-mile route instead if training time is limited.
 
 **Impact analysis**:
-- **Weekend exception** (recommended): Weekends often have more free time; household can plan around longer rides.
+- **Weekend exception** (approved): Weekends often have more free time; household can plan around longer rides.
 - **Training effectiveness**: 90–120 min rides are essential for endurance adaptation; without them, event completion is risky.
 - **User safety**: Undertrained riders risk injury and poor experience at hilly events.
 
-**Recommended path**: Implement **weekend exception** allowing 90–120 minute rides on Saturdays/Sundays only. Display clear messaging: "Weekend long rides are essential for event prep; weekday sessions remain ≤30 minutes." Seek user approval for this relaxation.
+**✅ APPROVED PATH**: Implement **weekend exception** allowing 90–120 minute rides on Saturdays/Sundays only. Display clear messaging: "Weekend long rides are essential for event prep; weekday sessions remain ≤30 minutes." User will adjust if needed based on real-world constraints.
 
 ---
 
-#### Challenge 3: Abdominal Diastasis Safety + Core Training
+#### Challenge 3: Abdominal Diastasis Safety + Core Training ✅
 
 **Quoted constraint**: "Abdominal diastasis" + "Improve overall health and lose weight."
 
@@ -1391,15 +1391,20 @@ To maximise development velocity, split work across four specialised agents:
 3. **Physio consultation**: Recommend professional assessment before any core work.
 
 **Impact analysis**:
-- **Modified-only** (recommended): Balances safety with functional core strength; extensive research supports these exercises for diastasis.
+- **Modified-only** (approved): Balances safety with functional core strength; extensive research supports these exercises for diastasis.
 - **Progress rate**: Slower than unrestricted training but sustainable and safe.
 - **Disclaimer reinforcement**: System must emphasise non-medical nature; encourage professional consultation.
 
-**Recommended path**: Implement **modified-only** approach with prominent safety disclaimers. Pre-filter all exercises tagged `contraindications: ['diastasis-risk']` for Wife's profile. Include note: "These exercises are considered diastasis-safe, but individual responses vary. Consult your physiotherapist if unsure."
+**✅ APPROVED PATH**: Implement **modified-only** approach with prominent safety disclaimers. Pre-filter all exercises tagged `contraindications: ['diastasis-risk']` for Wife's profile. Include **progressive strengthening** exercises:
+- **Weeks 1–4**: Focus on pelvic floor activation, breathing exercises
+- **Weeks 5–8**: Add bird dogs, dead bugs (low reps, focus on form)
+- **Weeks 9+**: Progress to side planks (modified on knees), glute bridges with core engagement
+- System must include variety of diastasis-safe exercises to enable gradual strengthening
+- Include note: "These exercises are considered diastasis-safe, but individual responses vary. Consult your physiotherapist if unsure."
 
 ---
 
-#### Challenge 4: Kid-Friendly Dinners + Calorie Deficit
+#### Challenge 4: Kid-Friendly Dinners + Calorie Deficit ✅
 
 **Quoted constraint**: "Dinner is shared with two daughters" + "Dinner recipes should be kid-friendly and practical" + "Calorie deficit + sustainable training."
 
@@ -1411,11 +1416,11 @@ To maximise development velocity, split work across four specialised agents:
 3. **Adults modify plate**: Let adults add extra vegetables or reduce starches while kids eat normally.
 
 **Impact analysis**:
-- **Compromise recipes** (recommended): Brazilian cuisine naturally includes balanced options (grilled meats, rice+beans, salads). Portion awareness more important than restrictive recipes.
+- **Compromise recipes** (approved): Brazilian cuisine naturally includes balanced options (grilled meats, rice+beans, salads). Portion awareness more important than restrictive recipes.
 - **Family dynamics**: Cooking one meal is practical; separate meals add stress.
 - **Calorie deficit**: Achieved through portion control + exercise rather than restrictive recipes.
 
-**Recommended path**: Design all dinners to be naturally moderate-calorie and kid-friendly (avoiding heavy sauces, fried foods). Emphasise **portion guidance** rather than strict calorie counts. Example messaging: "Serve yourself 1 cup rice instead of 2; fill half your plate with salad."
+**✅ APPROVED PATH**: Design all dinners to be naturally moderate-calorie and kid-friendly (avoiding heavy sauces, fried foods). **Daughters eat the same meals as adults** with no modifications. Emphasise **portion guidance** for adults rather than strict calorie counts. Example messaging: "Serve yourself 1 cup rice instead of 2; fill half your plate with salad."
 
 ---
 
