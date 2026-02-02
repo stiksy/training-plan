@@ -91,9 +91,9 @@ This plan outlines the implementation of a web-based health tracking system for 
 
 4. **Shopping list generator**
    - One-click generation from current week's meals
-   - Grouped by category (produce, protein, pantry, etc.)
+   - Grouped by category (Protein → Fresh Produce → Dairy → Grains → Pantry → Spices)
    - Quantities aggregated and deduplicated
-   - Print and export (plain text, PDF)
+   - "Copy to Clipboard" button (plain text format for Alexa shopping list)
 
 5. **Workout calendar**
    - 7-day view with daily workout cards for active profile
@@ -486,6 +486,12 @@ CyclingLog {
   - Previous week's completion status
   - Progression phase (for cycling plan)
 
+**Rest day defaults**
+- System suggests 1–2 rest days per week
+- Sunday is default rest day for both users
+- Users can manually add exercises on rest days (no warnings)
+- Rest days marked as "Suggested rest" but fully optional
+
 ### Sample Two-Week Schedule
 
 #### Week 1 (2–8 Feb)
@@ -658,22 +664,35 @@ CyclingLog {
    - Produce: pieces/kg (e.g. "3 tomatoes" or "0.5 kg tomatoes")
    - Proteins: grams or pieces (e.g. "4 chicken breasts ~600g")
    - Dairy: litres/units (e.g. "1L milk", "200g cheese")
-6. Sort by supermarket aisle order: produce → protein → dairy → grain → pantry → spices
+6. Sort by category order (optimized for Alexa): Protein → Fresh Produce → Dairy → Grains → Pantry → Spices & Seasoning
 
 **Category groupings**
-- **Produce**: vegetables, fruits, herbs
 - **Protein**: meat, fish, eggs
+- **Fresh Produce**: vegetables, fruits, herbs
 - **Dairy**: milk, cheese, yoghurt, requeijão
 - **Grains**: rice, pasta, bread, oats, tapioca flour
 - **Pantry**: oils, sauces, canned goods
 - **Spices & seasoning**: salt, pepper, dried herbs
 
+**Copy-to-clipboard format** (plain text for Alexa)
+```
+PROTEIN
+- 4 chicken breasts (~600g)
+- 500g lean mince
+
+FRESH PRODUCE
+- 3 tomatoes
+- 1 bunch spinach
+...
+```
+
 ### Calorie Deficit Approach
 
 **Conservative guidance** (non-prescriptive)
-- System does **not** calculate or display calories by default
-- Optional setting: "Show estimated calorie ranges" (off by default)
-- If enabled: display rough ranges per meal (breakfast 300–400, lunch 400–600, dinner 500–700)
+- Calorie estimates are **hidden by default**
+- Page-wide toggle button to show/hide calorie ranges across all meals
+- When enabled: display rough ranges per meal (breakfast 300–400, lunch 400–600, dinner 500–700)
+- Toggle state persists per session (not saved to profile)
 - Emphasis: portion awareness, whole foods, reduced processed foods
 - No macro targets or strict counting
 
@@ -1295,25 +1314,26 @@ To maximise development velocity, split work across four specialised agents:
 
 ## 11. Open Questions and Constraint Challenges
 
-### Open Questions (Require User Decision)
+### Open Questions ✅ RESOLVED
 
-1. **Recipe photo sourcing**: Should we include recipe photos in MVP? If yes, where should images be sourced (stock photos, user uploads, or skip for MVP)?
-   - **Recommendation**: Skip for MVP; add as V1 enhancement with Supabase storage.
+1. **Recipe photo sourcing** ✅
+   - **Decision**: Skip for MVP; add as future enhancement sourcing from stock photos.
 
-2. **Calorie visibility default**: Should estimated calorie ranges be visible by default or opt-in?
-   - **Recommendation**: Opt-in (settings toggle), emphasise portion awareness over counting.
+2. **Calorie visibility default** ✅
+   - **Decision**: Hidden by default. Provide page-wide toggle to show/hide calorie estimates across all meals.
 
-3. **Workout rest days**: Should system enforce at least one rest day per week, or allow users to override?
-   - **Recommendation**: Suggest 1–2 rest days but allow override with warning message.
+3. **Workout rest days** ✅
+   - **Decision**: Suggest 1–2 rest days per week, with Sunday as one default rest day. Users can manually add exercises on rest days without warnings.
 
-4. **Cycling outdoor weather**: Should system integrate weather API to suggest indoor trainer on rainy days?
-   - **Recommendation**: Nice-to-have for V1; defer to reduce MVP complexity.
+4. **Cycling outdoor weather** ✅
+   - **Decision**: Nice-to-have for V1 or V2; defer from MVP.
 
-5. **Shopping list printer format**: Preferred layout (compact list, checkboxes, categorised sections)?
-   - **Recommendation**: User testing during Phase 4; default to categorised checklist.
+5. **Shopping list export format** ✅
+   - **Decision**: Single "Copy to Clipboard" button that copies plain text format, categorized by type (protein, fresh produce, dairy, grains, pantry, spices). Optimized for pasting into Alexa shopping list. No PDF/print formats needed.
+   - **Categories**: Protein → Fresh Produce → Dairy → Grains → Pantry → Spices & Seasoning
 
-6. **Multi-household expansion**: Should data model support multiple households from start (over-engineering) or add later?
-   - **Recommendation**: Build for single household initially; migration path is straightforward (add `household_id` foreign keys).
+6. **Multi-household expansion** ✅
+   - **Decision**: Single household only. No multi-household support needed.
 
 ---
 
