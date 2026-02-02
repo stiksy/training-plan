@@ -37,23 +37,30 @@ interface AggregatedIngredient {
  * Generate shopping list from meal plan slots
  */
 export async function generateShoppingList(mealPlanId: string): Promise<Map<string, AggregatedIngredient[]>> {
+  console.log('🛒 Generating shopping list for meal plan:', mealPlanId)
+
   // 1. Get all meal plan slots for this plan
   const { data: slots, error: slotsError } = await supabase
     .from('meal_plan_slots')
     .select('recipe_id')
     .eq('meal_plan_id', mealPlanId)
 
+  console.log('📋 Found meal slots:', slots?.length || 0, slots)
+
   if (slotsError) {
-    console.error('Error fetching meal plan slots:', slotsError)
+    console.error('❌ Error fetching meal plan slots:', slotsError)
     throw slotsError
   }
 
   if (!slots || slots.length === 0) {
+    console.log('⚠️ No meal slots found')
     return new Map()
   }
 
   // 2. Get all recipe ingredients for these recipes
   const recipeIds = slots.map(slot => slot.recipe_id)
+  console.log('🍳 Recipe IDs to fetch ingredients for:', recipeIds)
+
   const { data: recipeIngredients, error: ingredientsError } = await supabase
     .from('recipe_ingredients')
     .select(`
@@ -62,12 +69,15 @@ export async function generateShoppingList(mealPlanId: string): Promise<Map<stri
     `)
     .in('recipe_id', recipeIds)
 
+  console.log('🥗 Found recipe ingredients:', recipeIngredients?.length || 0, recipeIngredients)
+
   if (ingredientsError) {
-    console.error('Error fetching recipe ingredients:', ingredientsError)
+    console.error('❌ Error fetching recipe ingredients:', ingredientsError)
     throw ingredientsError
   }
 
   if (!recipeIngredients || recipeIngredients.length === 0) {
+    console.log('⚠️ No recipe ingredients found - recipes may not have ingredients defined')
     return new Map()
   }
 
