@@ -16,7 +16,7 @@ INSERT INTO users (id, name, email, age, height_cm, weight_kg, goals, health_con
     175.0,
     85.0,
     ARRAY['Complete Hampshire Hilly Hundred (68 miles)', 'Maintain calorie deficit', 'Improve overall fitness'],
-    ARRAY[],
+    ARRAY[]::TEXT[],
     ARRAY['cycling', 'gym workouts', 'yoga']
   ),
   (
@@ -169,7 +169,7 @@ INSERT INTO exercises (name, category, subcategory, duration_min, intensity, equ
     60,
     'moderate',
     ARRAY['bicycle'],
-    ARRAY[],
+    ARRAY[]::TEXT[],
     'Start with 30 minutes and gradually increase duration',
     'https://youtube.com/watch?v=example',
     'Maintain conversational pace. Stay hydrated.'
@@ -181,7 +181,7 @@ INSERT INTO exercises (name, category, subcategory, duration_min, intensity, equ
     30,
     'high',
     ARRAY['bicycle'],
-    ARRAY[],
+    ARRAY[]::TEXT[],
     'Reduce interval duration if needed',
     'https://youtube.com/watch?v=example',
     '5-minute warm-up required. Cool down for 5 minutes.'
@@ -195,7 +195,7 @@ INSERT INTO exercises (name, category, subcategory, duration_min, intensity, equ
     30,
     'moderate',
     ARRAY['dumbbells', 'resistance bands'],
-    ARRAY[],
+    ARRAY[]::TEXT[],
     'Adjust weight as needed',
     'https://youtube.com/watch?v=example',
     'Focus on proper form over weight'
@@ -209,7 +209,7 @@ INSERT INTO exercises (name, category, subcategory, duration_min, intensity, equ
     20,
     'moderate',
     ARRAY['mat'],
-    ARRAY[],
+    ARRAY[]::TEXT[],
     'Focus on pelvic floor engagement',
     'https://youtube.com/watch?v=example',
     'Bird dogs, dead bugs, side planks (modified). Avoid crunches and full planks.'
@@ -222,8 +222,8 @@ INSERT INTO exercises (name, category, subcategory, duration_min, intensity, equ
     'dance',
     25,
     'moderate',
-    ARRAY[],
-    ARRAY[],
+    ARRAY[]::TEXT[],
+    ARRAY[]::TEXT[],
     'Reduce impact by stepping instead of jumping',
     'https://youtube.com/watch?v=example',
     'Avoid high-impact movements and deep knee bends'
@@ -250,8 +250,8 @@ INSERT INTO exercises (name, category, subcategory, duration_min, intensity, equ
     'walking',
     30,
     'low',
-    ARRAY[],
-    ARRAY[],
+    ARRAY[]::TEXT[],
+    ARRAY[]::TEXT[],
     'Start at comfortable pace',
     NULL,
     'Safe for all fitness levels'
