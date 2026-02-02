@@ -79,21 +79,30 @@ export function MealPlanner() {
   const handleRecipeSelect = async (recipeId: string) => {
     if (!selectedSlot || !mealPlan || saving) return
 
+    console.log('🍽️ Saving recipe:', {
+      mealPlanId: mealPlan.id,
+      day: selectedSlot.day,
+      mealType: selectedSlot.mealType,
+      recipeId
+    })
+
     setSaving(true)
     try {
       const { updateMealPlanSlot } = await import('@/services/mealPlans')
-      await updateMealPlanSlot(
+      const result = await updateMealPlanSlot(
         mealPlan.id,
         selectedSlot.day,
         selectedSlot.mealType,
         recipeId
       )
 
+      console.log('✅ Recipe saved successfully:', result)
+
       // Reload meal plan to show updated recipe
       await loadMealPlan()
       setSelectedSlot(null)
     } catch (error) {
-      console.error('Error updating meal plan slot:', error)
+      console.error('❌ Error updating meal plan slot:', error)
       alert('Failed to update meal. Please try again.')
     } finally {
       setSaving(false)
