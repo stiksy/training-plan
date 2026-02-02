@@ -1,6 +1,6 @@
 -- Weight log table
 CREATE TABLE weight_logs (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES users(id) ON DELETE CASCADE,
   date DATE NOT NULL,
   weight_kg DECIMAL(5,2) NOT NULL CHECK (weight_kg > 0),
@@ -9,7 +9,7 @@ CREATE TABLE weight_logs (
 
 -- Workout log table
 CREATE TABLE workout_logs (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   scheduled_workout_id UUID REFERENCES scheduled_workouts(id) ON DELETE CASCADE,
   user_id UUID REFERENCES users(id) ON DELETE CASCADE,
   completed_exercises JSONB NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE workout_logs (
 
 -- Cycling log table
 CREATE TABLE cycling_logs (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES users(id) ON DELETE CASCADE,
   date DATE NOT NULL,
   distance_km DECIMAL(6,2) NOT NULL CHECK (distance_km > 0),

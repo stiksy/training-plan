@@ -1,6 +1,6 @@
 -- Ingredients table
 CREATE TABLE ingredients (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   category TEXT NOT NULL CHECK (category IN ('produce', 'protein', 'dairy', 'grain', 'pantry', 'spice', 'other')),
   default_unit TEXT NOT NULL CHECK (default_unit IN ('g', 'ml', 'units', 'tbsp', 'tsp', 'cup'))
@@ -8,7 +8,7 @@ CREATE TABLE ingredients (
 
 -- Recipes table
 CREATE TABLE recipes (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   meal_type TEXT NOT NULL CHECK (meal_type IN ('breakfast', 'lunch', 'dinner', 'snack')),
   cuisine_tags TEXT[] DEFAULT '{}',
@@ -31,7 +31,7 @@ CREATE TABLE recipe_ingredients (
 
 -- Meal plans table
 CREATE TABLE meal_plans (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   household_id UUID REFERENCES households(id) ON DELETE CASCADE,
   week_start_date DATE NOT NULL,
   status TEXT NOT NULL CHECK (status IN ('draft', 'active', 'archived')),
@@ -42,7 +42,7 @@ CREATE TABLE meal_plans (
 
 -- Meal plan slots table
 CREATE TABLE meal_plan_slots (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   meal_plan_id UUID REFERENCES meal_plans(id) ON DELETE CASCADE,
   day_of_week INTEGER NOT NULL CHECK (day_of_week >= 0 AND day_of_week <= 6),
   meal_type TEXT NOT NULL CHECK (meal_type IN ('breakfast', 'lunch', 'dinner')),
@@ -52,7 +52,7 @@ CREATE TABLE meal_plan_slots (
 
 -- Shopping lists table
 CREATE TABLE shopping_lists (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   household_id UUID REFERENCES households(id) ON DELETE CASCADE,
   meal_plan_id UUID REFERENCES meal_plans(id) ON DELETE SET NULL,
   week_date DATE NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE shopping_lists (
 
 -- Shopping list items table
 CREATE TABLE shopping_list_items (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   shopping_list_id UUID REFERENCES shopping_lists(id) ON DELETE CASCADE,
   ingredient_id UUID REFERENCES ingredients(id) ON DELETE RESTRICT,
   quantity DECIMAL(10,2) NOT NULL CHECK (quantity > 0),

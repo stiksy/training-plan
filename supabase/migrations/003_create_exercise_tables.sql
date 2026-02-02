@@ -1,6 +1,6 @@
 -- Exercises table
 CREATE TABLE exercises (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   category TEXT NOT NULL CHECK (category IN ('cardio', 'strength', 'flexibility', 'sport')),
   subcategory TEXT,
@@ -15,7 +15,7 @@ CREATE TABLE exercises (
 
 -- Workout templates table
 CREATE TABLE workout_templates (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   target_user_profile JSONB,
   exercises JSONB NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE workout_templates (
 
 -- Workout schedules table
 CREATE TABLE workout_schedules (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   household_id UUID REFERENCES households(id) ON DELETE CASCADE,
   user_id UUID REFERENCES users(id) ON DELETE CASCADE,
   week_start_date DATE NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE workout_schedules (
 
 -- Scheduled workouts table
 CREATE TABLE scheduled_workouts (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   schedule_id UUID REFERENCES workout_schedules(id) ON DELETE CASCADE,
   date DATE NOT NULL,
   workout_template_id UUID REFERENCES workout_templates(id) ON DELETE SET NULL,
