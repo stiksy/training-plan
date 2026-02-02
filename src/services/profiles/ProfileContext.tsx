@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
-import { useAuth } from '../auth/AuthContext'
+// import { useAuth } from '../auth/AuthContext'
+import { useMockAuth as useAuth } from '../auth/MockAuth'
 import { supabase } from '../supabase'
 import type { User, Household } from '@/types'
 
