@@ -25,10 +25,11 @@ export function ShoppingList() {
     setLoading(true)
     try {
       // Get meal plan for the week
-      const { plan } = await getMealPlanForWeek(household.id, weekDate)
+      const { plan, slots } = await getMealPlanForWeek(household.id, weekDate)
 
-      if (!plan) {
+      if (!plan || slots.length === 0) {
         setShoppingList(new Map())
+        setLoading(false)
         return
       }
 
@@ -66,7 +67,8 @@ export function ShoppingList() {
     return (
       <div className="shopping-list-empty">
         <h2>No Shopping List Yet</h2>
-        <p>Plan your meals for the week first, then generate your shopping list.</p>
+        <p>Add meals to your meal plan for the week, then click "Generate Shopping List".</p>
+        <p className="week-note">Week of {formatWeekRange(weekDate)}</p>
         <a href="/training-plan/meals" className="btn-primary">
           Go to Meal Planner
         </a>

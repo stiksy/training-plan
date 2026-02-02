@@ -101,8 +101,8 @@ export function MealPlanner() {
   }
 
   const handleGenerateShoppingList = () => {
-    // Navigate to shopping list page (will implement in next step)
-    window.location.href = '/training-plan/shopping'
+    // Navigate to shopping list page with current week
+    window.location.href = `/training-plan/shopping?week=${weekStartDate}`
   }
 
   if (loading) {
