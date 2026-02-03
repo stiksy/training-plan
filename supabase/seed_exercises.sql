@@ -275,7 +275,7 @@ INSERT INTO exercises (name, category, subcategory, duration_min, intensity, equ
     ARRAY[]::TEXT[],
     'Adjust machine range of motion',
     'https://youtube.com/watch?v=leg-press',
-    'KNEE-SAFE: Control descent, don\'t lock knees. Avoid deep knee flexion past 90 degrees.'
+    'KNEE-SAFE: Control descent, don''t lock knees. Avoid deep knee flexion past 90 degrees.'
   ),
 
   -- Fernando-focused lower body (can include deeper movements)
