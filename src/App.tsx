@@ -6,6 +6,8 @@ import { ProfileSwitcher } from './components/ProfileSwitcher'
 import { MealPlanner } from './components/MealPlanner'
 import { ShoppingList } from './components/ShoppingList'
 import { Dashboard } from './components/Dashboard'
+import { WorkoutSchedule } from './components/WorkoutSchedule'
+import { ExerciseLibrary } from './components/ExerciseLibrary'
 import './App.css'
 
 function AppContent() {
@@ -34,6 +36,7 @@ function AppContent() {
             <Link to="/meals">Meal Planner</Link>
             <Link to="/shopping">Shopping List</Link>
             <Link to="/workouts">Workouts</Link>
+            <Link to="/exercises">Exercises</Link>
           </nav>
         </div>
         <div className="app-header-right">
@@ -57,12 +60,8 @@ function AppContent() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/meals" element={<MealPlanner />} />
           <Route path="/shopping" element={<ShoppingList />} />
-          <Route path="/workouts" element={
-            <div className="page-placeholder">
-              <h2>Workouts</h2>
-              <p>Coming soon...</p>
-            </div>
-          } />
+          <Route path="/workouts" element={<WorkoutSchedule />} />
+          <Route path="/exercises" element={<ExerciseLibrary />} />
         </Routes>
       </main>
     </div>

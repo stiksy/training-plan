@@ -101,3 +101,60 @@ export interface ShoppingListItem {
   checked: boolean
   ingredient?: Ingredient
 }
+
+// Workout-related types
+export type ExerciseCategory = 'cardio' | 'strength' | 'flexibility' | 'sport'
+export type ExerciseIntensity = 'low' | 'moderate' | 'high'
+
+export interface Exercise {
+  id: string
+  name: string
+  category: ExerciseCategory
+  subcategory: string | null
+  duration_min: number
+  intensity: ExerciseIntensity
+  equipment: string[]
+  contraindications: string[]
+  modifications: string | null
+  youtube_url: string | null
+  safety_notes: string | null
+}
+
+export interface WorkoutTemplate {
+  id: string
+  name: string
+  target_user_profile: Record<string, any> | null
+  exercises: Record<string, any> // JSONB field
+  total_duration_min: number
+}
+
+export interface WorkoutSchedule {
+  id: string
+  user_id: string
+  household_id: string
+  week_start_date: string
+  status: 'draft' | 'active' | 'archived'
+  created_at: string
+  updated_at: string
+}
+
+export interface ScheduledWorkout {
+  id: string
+  schedule_id: string
+  date: string
+  workout_template_id: string | null
+  custom_exercises: Record<string, any> | null // JSONB field
+  status: WorkoutStatus
+  completion_note: string | null
+  completed_at: string | null
+  carried_forward_from: string | null
+  is_alternative: boolean
+  alternative_reason: string | null
+  template?: WorkoutTemplate
+}
+
+// Safety-enhanced type with phantom brand for compile-time verification
+export interface SafeExercise extends Exercise {
+  readonly _safetyValidated: true
+  readonly validatedForUser: string
+}

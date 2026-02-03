@@ -2,26 +2,36 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useProfile } from '@/services/profiles/ProfileContext'
 import { getMealPlanForWeek, getWeekStartDate, formatWeekRange } from '@/services/mealPlans'
-import type { MealPlanSlot } from '@/types'
+import { getWorkoutScheduleForWeek } from '@/services/workouts'
+import type { MealPlanSlot, ScheduledWorkout } from '@/types'
 import './Dashboard.css'
 
 export function Dashboard() {
   const { activeProfile, household } = useProfile()
   const [weekStartDate] = useState(getWeekStartDate())
   const [mealSlots, setMealSlots] = useState<MealPlanSlot[]>([])
+  const [workouts, setWorkouts] = useState<ScheduledWorkout[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     loadWeekOverview()
-  }, [household])
+  }, [household, activeProfile])
 
   const loadWeekOverview = async () => {
-    if (!household) return
+    if (!household || !activeProfile) return
 
     setLoading(true)
     try {
+      // Load meals
       const { slots } = await getMealPlanForWeek(household.id, weekStartDate)
       setMealSlots(slots)
+
+      // Load workouts
+      const { workouts: fetchedWorkouts } = await getWorkoutScheduleForWeek(
+        activeProfile.id,
+        weekStartDate
+      )
+      setWorkouts(fetchedWorkouts)
     } catch (error) {
       console.error('Error loading week overview:', error)
     } finally {
@@ -32,6 +42,11 @@ export function Dashboard() {
   const totalMeals = 21 // 7 days × 3 meals
   const plannedMeals = mealSlots.length
   const completionPercentage = Math.round((plannedMeals / totalMeals) * 100)
+
+  // Workout stats
+  const totalWorkouts = workouts.filter(w => w.custom_exercises && !w.custom_exercises.rest_day).length
+  const completedWorkouts = workouts.filter(w => w.status === 'completed').length
+  const workoutCompletion = totalWorkouts > 0 ? Math.round((completedWorkouts / totalWorkouts) * 100) : 0
 
   if (loading) {
     return (
@@ -58,10 +73,18 @@ export function Dashboard() {
         </div>
 
         <div className="stat-card">
+          <div className="stat-icon">💪</div>
+          <div className="stat-content">
+            <div className="stat-value">{completedWorkouts}/{totalWorkouts}</div>
+            <div className="stat-label">Workouts Done</div>
+          </div>
+        </div>
+
+        <div className="stat-card">
           <div className="stat-icon">📊</div>
           <div className="stat-content">
-            <div className="stat-value">{completionPercentage}%</div>
-            <div className="stat-label">Week Complete</div>
+            <div className="stat-value">{workoutCompletion}%</div>
+            <div className="stat-label">Workout Progress</div>
           </div>
         </div>
 
@@ -103,10 +126,32 @@ export function Dashboard() {
             <p>View your grocery list for the week</p>
           </Link>
 
-          <Link to="/workouts" className="quick-link-card">
-            <div className="card-icon">💪</div>
-            <h4>Workouts</h4>
-            <p>Coming soon - Exercise scheduling</p>
+          {totalWorkouts === 0 ? (
+            <Link to="/workouts" className="quick-link-card primary">
+              <div className="card-icon">💪</div>
+              <h4>Plan Your Workouts</h4>
+              <p>Generate a personalised workout schedule</p>
+            </Link>
+          ) : completedWorkouts < totalWorkouts ? (
+            <Link to="/workouts" className="quick-link-card">
+              <div className="card-icon">💪</div>
+              <h4>Workout Schedule</h4>
+              <p>
+                {totalWorkouts - completedWorkouts} workout{totalWorkouts - completedWorkouts !== 1 ? 's' : ''} remaining this week
+              </p>
+            </Link>
+          ) : (
+            <Link to="/workouts" className="quick-link-card success">
+              <div className="card-icon">✅</div>
+              <h4>All Workouts Done!</h4>
+              <p>Great job this week!</p>
+            </Link>
+          )}
+
+          <Link to="/exercises" className="quick-link-card">
+            <div className="card-icon">📚</div>
+            <h4>Exercise Library</h4>
+            <p>Browse safe exercises for your profile</p>
           </Link>
         </div>
       </div>
