@@ -121,6 +121,7 @@
   min-height: 120px;
   border: none;
   cursor: pointer;
+  color: #333;
   text-align: left;
   transition: all 0.2s;
   display: flex;

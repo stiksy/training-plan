@@ -153,6 +153,7 @@
   min-height: 200px;
   display: flex;
   flex-direction: column;
+  color: #333;
 }
 
 .workout-day-card:hover {
@@ -328,6 +329,7 @@
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
+  color: #333;
 }
 
 .workout-detail-modal .modal-header {
