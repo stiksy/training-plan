@@ -41,7 +41,6 @@ export function Dashboard() {
 
   const totalMeals = 21 // 7 days × 3 meals
   const plannedMeals = mealSlots.length
-  const completionPercentage = Math.round((plannedMeals / totalMeals) * 100)
 
   // Workout stats
   const totalWorkouts = workouts.filter(w => w.custom_exercises && !w.custom_exercises.rest_day).length

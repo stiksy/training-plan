@@ -11,4 +11,9 @@ export default defineConfig({
     },
   },
   base: '/training-plan/',
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/test/setup.ts',
+  },
 })

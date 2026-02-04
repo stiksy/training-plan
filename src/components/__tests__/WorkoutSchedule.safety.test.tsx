@@ -4,9 +4,9 @@
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, waitFor, within } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { WorkoutSchedule } from '../WorkoutSchedule'
-import type { Exercise, User, ScheduledWorkout, WorkoutSchedule as WorkoutScheduleType } from '@/types'
+import type { ScheduledWorkout, WorkoutSchedule as WorkoutScheduleType } from '@/types'
 
 // Mock the services
 vi.mock('@/services/workouts', () => ({

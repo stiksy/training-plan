@@ -4,7 +4,7 @@
  */
 
 import { supabase } from './supabase'
-import type { Exercise, WorkoutSchedule, ScheduledWorkout, User } from '@/types'
+import type { Exercise, WorkoutSchedule, ScheduledWorkout } from '@/types'
 
 /**
  * LAYER 1 FILTERING: Database-level constraint filtering
@@ -201,7 +201,7 @@ export async function updateScheduledWorkout(
 ): Promise<ScheduledWorkout> {
   // If optimistic locking is enabled, first check current updated_at
   if (expectedUpdatedAt) {
-    const { data: current, error: fetchError } = await supabase
+    const { data: _current, error: fetchError } = await supabase
       .from('scheduled_workouts')
       .select('updated_at')
       .eq('id', workoutId)

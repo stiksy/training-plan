@@ -35,7 +35,7 @@ export function WorkoutSchedule() {
   const [loading, setLoading] = useState(true)
   const [generating, setGenerating] = useState(false)
   const [selectedWorkout, setSelectedWorkout] = useState<ScheduledWorkout | null>(null)
-  const [realtimeChannel, setRealtimeChannel] = useState<RealtimeChannel | null>(null)
+  const [, setRealtimeChannel] = useState<RealtimeChannel | null>(null)
 
   // CRITICAL: Clear state on profile change to prevent stale data
   useEffect(() => {

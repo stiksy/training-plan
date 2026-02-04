@@ -5,7 +5,6 @@
 
 import type { Exercise, User, ScheduledWorkout } from '@/types'
 import {
-  filterExercisesByConstraints,
   validateDuration,
   assertExercisesSafe,
 } from './workoutConstraints'
@@ -153,21 +152,13 @@ function selectRandomExercise(exercises: Exercise[]): Exercise {
  * @returns Rebalanced workout array
  */
 export function balanceIntensity(workouts: ScheduledWorkout[]): ScheduledWorkout[] {
-  // Count intensity distribution
-  const intensityCounts = {
+  // MVP: Trust initial selection algorithm
+  // Future: Count intensity distribution and rebalance
+  /* const intensityCounts = {
     high: 0,
     moderate: 0,
     low: 0,
-  }
-
-  workouts.forEach(workout => {
-    if (workout.custom_exercises && 'exercise_id' in workout.custom_exercises) {
-      // This is a placeholder - in full implementation, we'd look up exercise details
-      // For now, we'll trust the initial selection
-    }
-  })
-
-  // MVP: Trust initial selection algorithm
+  } */
   // Future V2: Implement intelligent rebalancing if too many high-intensity days in a row
   return workouts
 }

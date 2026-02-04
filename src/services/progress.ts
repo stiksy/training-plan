@@ -74,7 +74,8 @@ export async function deleteWeightLog(id: string) {
   if (error) throw error
 }
 
-export async function getWorkoutLogs(userId: string, startDate?: string, endDate?: string) {
+export async function getWorkoutLogs(userId: string, _startDate?: string, _endDate?: string) {
+  // Note: Date filtering not yet implemented, reserved for future use
   let query = supabase
     .from('workout_logs')
     .select('*, scheduled_workouts(*)')

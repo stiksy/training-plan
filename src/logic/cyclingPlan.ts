@@ -15,11 +15,13 @@ export interface CyclingWorkout {
 }
 
 // Training plan constants
-const GOAL_DISTANCE_MILES = 68
+// Reserved for future cycling plan logic
+// const GOAL_DISTANCE_MILES = 68
 const TOTAL_WEEKS = 14
 const BASE_PHASE_WEEKS = 5 // Weeks 1-5: Build aerobic base
 const BUILD_PHASE_WEEKS = 7 // Weeks 6-12: Increase intensity and distance
-const TAPER_PHASE_WEEKS = 2 // Weeks 13-14: Taper for event
+// Reserved for future cycling plan logic - Weeks 13-14: Taper for event
+// const TAPER_PHASE_WEEKS = 2
 
 /**
  * Determine which phase of training based on week number
