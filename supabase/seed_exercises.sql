@@ -568,7 +568,7 @@ INSERT INTO exercises (name, category, subcategory, duration_min, intensity, equ
     ARRAY[]::TEXT[],
     'Reduce intensity of poses',
     'https://youtube.com/watch?v=active-recovery-yoga',
-    'Light movement for rest days. Gentle sun salutations, cat-cow, child\'s pose.'
+    'Light movement for rest days. Gentle sun salutations, cat-cow, child''s pose.'
   ),
 
   (
