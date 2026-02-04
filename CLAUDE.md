@@ -44,6 +44,25 @@ Web-based health tracking system for a two-person household. Meal planning, exer
 4. Merge to `main` → auto-deploy to GitHub Pages
 5. Monitor Supabase logs for errors
 
+## Deployment Monitoring (CRITICAL)
+**After every `git push` to remote, you MUST monitor the GitHub Actions build/deploy:**
+
+1. Immediately after pushing, run: `gh run list --limit 1` to check the latest run status
+2. Wait 30-60 seconds, then check again to verify completion
+3. If status is `in_progress`, wait and check until it shows `completed`
+4. If status is `failure`, immediately investigate with: `gh run view <run-id> --log-failed`
+5. Fix any build errors (TypeScript, missing dependencies, etc.) and push corrections
+6. **Never leave a failed deployment unresolved** - the live site may be broken
+
+**Common build failures to check:**
+- TypeScript strict mode errors (unused variables, missing types)
+- Missing dependencies in package.json
+- CSS syntax errors
+- Import/export issues
+- Test file compilation errors
+
+Use `npm run build` locally before pushing to catch errors early.
+
 ## Future Agents: Read This First
 - Meal/workout logic lives in `/src/logic`; never hardcode constraints in UI components
 - Recipe database seed is in `/supabase/seed.sql`; update there, not in code
