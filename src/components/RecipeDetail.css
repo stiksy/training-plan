@@ -1,0 +1,140 @@
+.recipe-detail {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.recipe-detail-loading,
+.recipe-detail-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  padding: 2rem;
+}
+
+.back-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: #0056b3;
+}
+
+.recipe-header {
+  margin-bottom: 2rem;
+}
+
+.recipe-header h1 {
+  margin: 0.5rem 0 1rem 0;
+  color: #333;
+}
+
+.recipe-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.meta-item {
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.meta-item strong {
+  color: #333;
+  margin-right: 0.25rem;
+}
+
+.recipe-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  background: #e0e7ff;
+  color: #4f46e5;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.recipe-content {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.recipe-section {
+  margin-bottom: 2rem;
+}
+
+.recipe-section:last-child {
+  margin-bottom: 0;
+}
+
+.recipe-section h2 {
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.ingredients-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ingredients-list li {
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.instructions p {
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.no-instructions {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .recipe-detail {
+    padding: 1rem;
+  }
+
+  .recipe-content {
+    padding: 1rem;
+  }
+
+  .recipe-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

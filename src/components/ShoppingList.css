@@ -5,7 +5,9 @@
 }
 
 .shopping-list-header {
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 2rem;
 }
 
@@ -13,6 +15,14 @@
   font-size: 2rem;
   color: #333;
   margin-bottom: 0.5rem;
+}
+
+.progress-indicator {
+  background: #e0e7ff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  color: #4f46e5;
 }
 
 .week-label {
@@ -23,7 +33,38 @@
 .shopping-list-actions {
   display: flex;
   justify-content: center;
+  gap: 1rem;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.add-item-btn,
+.clear-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.add-item-btn {
+  background: #10b981;
+  color: white;
+}
+
+.add-item-btn:hover {
+  background: #059669;
+}
+
+.clear-btn {
+  background: #ef4444;
+  color: white;
+}
+
+.clear-btn:hover {
+  background: #dc2626;
 }
 
 .copy-btn {
@@ -86,11 +127,57 @@
   margin-bottom: 0.5rem;
   background: #f8f9ff;
   border-radius: 6px;
-  transition: background 0.2s;
+  transition: all 0.2s;
 }
 
 .shopping-item:hover {
   background: #f0f2ff;
+}
+
+.shopping-item.checked {
+  opacity: 0.5;
+}
+
+.shopping-item.checked .item-name {
+  text-decoration: line-through;
+}
+
+.shopping-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.shopping-item .item-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  cursor: pointer;
+}
+
+.manual-badge {
+  background: #10b981;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.delete-item-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+  padding: 0.25rem;
+}
+
+.delete-item-btn:hover {
+  opacity: 1;
 }
 
 .item-quantity {
@@ -165,13 +252,110 @@
   background: #535bf2;
 }
 
+.add-item-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.add-item-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.add-item-form h3 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+.form-actions button {
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.form-actions button:not(.primary) {
+  background: #e0e0e0;
+}
+
+.form-actions button:not(.primary):hover {
+  background: #d0d0d0;
+}
+
+.form-actions button.primary {
+  background: #646cff;
+  color: white;
+}
+
+.form-actions button.primary:hover {
+  background: #535bf2;
+}
+
 @media (max-width: 768px) {
   .shopping-list {
     padding: 1rem;
   }
 
+  .shopping-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
   .shopping-list-header h1 {
     font-size: 1.5rem;
+  }
+
+  .progress-indicator {
+    align-self: stretch;
+    text-align: center;
   }
 
   .shopping-list-content {
@@ -182,7 +366,7 @@
     font-size: 1.1rem;
   }
 
-  .shopping-item {
+  .shopping-item .item-content {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.25rem;
@@ -190,5 +374,9 @@
 
   .item-quantity {
     min-width: auto;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
   }
 }

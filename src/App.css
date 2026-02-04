@@ -135,6 +135,25 @@
   margin: 0;
 }
 
+.app-footer {
+  background: #f8f9fa;
+  border-top: 1px solid #e0e0e0;
+  padding: 2rem;
+  text-align: center;
+  margin-top: auto;
+}
+
+.app-footer p {
+  margin: 0.5rem 0;
+  color: #666;
+  font-size: 0.875rem;
+}
+
+.footer-note {
+  font-size: 0.75rem !important;
+  color: #999 !important;
+}
+
 @media (max-width: 768px) {
   .app-header {
     flex-direction: column;
@@ -150,10 +169,21 @@
 
   .app-nav {
     width: 100%;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .app-nav a {
+    padding: 0.5rem;
   }
 
   .quick-links {
     grid-template-columns: 1fr;
+  }
+
+  .app-footer {
+    padding: 1rem;
   }
 }

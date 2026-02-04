@@ -1,0 +1,167 @@
+.disclaimer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1rem;
+}
+
+.disclaimer-modal {
+  background: white;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.disclaimer-header {
+  padding: 1.5rem;
+  border-bottom: 2px solid #f0f0f0;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.disclaimer-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #d9534f;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.close-btn:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.disclaimer-content {
+  padding: 1.5rem;
+}
+
+.disclaimer-intro {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.disclaimer-section {
+  margin-bottom: 1.5rem;
+}
+
+.disclaimer-section h3 {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: #333;
+}
+
+.disclaimer-section ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  line-height: 1.8;
+}
+
+.disclaimer-section li {
+  margin-bottom: 0.5rem;
+}
+
+.disclaimer-section p {
+  line-height: 1.6;
+  margin: 0;
+}
+
+.disclaimer-warning {
+  background: #fff3cd;
+  border: 2px solid #ffc107;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  line-height: 1.6;
+}
+
+.disclaimer-footer {
+  padding: 1.5rem;
+  border-top: 2px solid #f0f0f0;
+  text-align: center;
+  position: sticky;
+  bottom: 0;
+  background: white;
+}
+
+.disclaimer-accept-btn,
+.disclaimer-close-btn {
+  background: #d9534f;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.disclaimer-accept-btn:hover,
+.disclaimer-close-btn:hover {
+  background: #c9302c;
+}
+
+.disclaimer-note {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.health-info-link {
+  background: none;
+  border: none;
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.875rem;
+  padding: 0;
+}
+
+.health-info-link:hover {
+  color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .disclaimer-modal {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+  }
+
+  .disclaimer-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .disclaimer-intro {
+    font-size: 1rem;
+  }
+}

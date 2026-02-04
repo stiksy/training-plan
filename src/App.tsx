@@ -4,10 +4,14 @@ import { MockAuthProvider as AuthProvider } from './services/auth/MockAuth'
 import { ProfileProvider, useProfile } from './services/profiles/ProfileContext'
 import { ProfileSwitcher } from './components/ProfileSwitcher'
 import { MealPlanner } from './components/MealPlanner'
-import { ShoppingList } from './components/ShoppingList'
+import { EnhancedShoppingList } from './components/EnhancedShoppingList'
 import { Dashboard } from './components/Dashboard'
 import { WorkoutSchedule } from './components/WorkoutSchedule'
 import { ExerciseLibrary } from './components/ExerciseLibrary'
+import { ProgressTracker } from './components/ProgressTracker'
+import { FavouriteMeals } from './components/FavouriteMeals'
+import { RecipeDetail } from './components/RecipeDetail'
+import { HealthDisclaimer, HealthDisclaimerLink } from './components/HealthDisclaimer'
 import './App.css'
 
 function AppContent() {
@@ -28,6 +32,7 @@ function AppContent() {
 
   return (
     <div className="app">
+      <HealthDisclaimer />
       <header className="app-header">
         <div className="app-header-left">
           <h1>Training Plan</h1>
@@ -37,6 +42,8 @@ function AppContent() {
             <Link to="/shopping">Shopping List</Link>
             <Link to="/workouts">Workouts</Link>
             <Link to="/exercises">Exercises</Link>
+            <Link to="/progress">Progress</Link>
+            <Link to="/favourites">Favourites</Link>
           </nav>
         </div>
         <div className="app-header-right">
@@ -59,11 +66,24 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/meals" element={<MealPlanner />} />
-          <Route path="/shopping" element={<ShoppingList />} />
+          <Route path="/shopping" element={<EnhancedShoppingList />} />
           <Route path="/workouts" element={<WorkoutSchedule />} />
           <Route path="/exercises" element={<ExerciseLibrary />} />
+          <Route path="/progress" element={<ProgressTracker />} />
+          <Route path="/favourites" element={<FavouriteMeals />} />
+          <Route path="/recipe/:id" element={<RecipeDetail />} />
         </Routes>
       </main>
+
+      <footer className="app-footer">
+        <p>
+          <HealthDisclaimerLink />
+        </p>
+        <p className="footer-note">
+          This tool provides general fitness and nutrition suggestions for informational purposes
+          only. Not medical advice.
+        </p>
+      </footer>
     </div>
   )
 }
